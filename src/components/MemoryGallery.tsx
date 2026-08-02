@@ -8,7 +8,8 @@ import {
   listMemories,
   lockUploads,
   unlockUploads,
-  type Memory,
+  uploadMemory,
+
 } from "@/lib/memories.functions";
 
 /** Ten photo/video slots, editable only after the secret code is entered. */
