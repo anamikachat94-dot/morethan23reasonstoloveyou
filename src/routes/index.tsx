@@ -3,10 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Starfield } from "@/components/Starfield";
 import { Countdown } from "@/components/Countdown";
 import { ConfettiButton } from "@/components/ConfettiButton";
+import { MemoryGallery } from "@/components/MemoryGallery";
 import starrySky from "@/assets/starry-sky.jpg";
-import photo1 from "@/assets/photo-1.jpg";
-import photo2 from "@/assets/photo-2.jpg";
-import photo3 from "@/assets/photo-3.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
