@@ -3,10 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Starfield } from "@/components/Starfield";
 import { Countdown } from "@/components/Countdown";
 import { ConfettiButton } from "@/components/ConfettiButton";
-import starrySky from "@/assets/starry-sky.jpg";
-import photo1 from "@/assets/photo-1.jpg";
-import photo2 from "@/assets/photo-2.jpg";
-import photo3 from "@/assets/photo-3.jpg";
+import { MemoryGallery } from "@/components/MemoryGallery";
+import pastelSky from "@/assets/pastel-sky.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,11 +25,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const gallery = [
-  { src: photo1, alt: "Us together under a sky full of stars" },
-  { src: photo2, alt: "Our hands held together in the fairy lights" },
-  { src: photo3, alt: "A birthday cake glowing with candles" },
-];
 
 const timeline = [
   {
@@ -72,13 +65,13 @@ function Index() {
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <img
-          src={starrySky}
+          src={pastelSky}
           alt=""
           width={1920}
           height={1080}
-          className="absolute inset-0 h-full w-full object-cover opacity-70"
+          className="absolute inset-0 h-full w-full object-cover opacity-90"
         />
-        <div className="absolute inset-0 bg-background/50" />
+        <div className="absolute inset-0 bg-background/35" />
         <Starfield />
 
         <div className="relative z-10 max-w-2xl">
@@ -156,28 +149,12 @@ function Index() {
           <h2 className="text-center font-display text-4xl sm:text-5xl">Us, in pictures</h2>
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
           <p className="mx-auto mt-6 max-w-md text-center text-xs font-light text-muted-foreground">
-            Swap these for our own photos and videos whenever you like.
+            Ten little slots for our photos and videos.
           </p>
-          <div className="mt-12 grid gap-5 sm:grid-cols-3">
-            {gallery.map((photo, i) => (
-              <figure
-                key={photo.alt}
-                className="group overflow-hidden rounded-sm border border-border shadow-soft"
-                style={i === 1 ? { marginTop: "2rem" } : undefined}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  loading="lazy"
-                  width={1024}
-                  height={1280}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </figure>
-            ))}
-          </div>
+          <MemoryGallery />
         </div>
       </section>
+
 
       {/* Timeline */}
       <section className="relative overflow-hidden bg-card/40 px-6 py-28">
