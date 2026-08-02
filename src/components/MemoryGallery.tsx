@@ -1,0 +1,212 @@
+import { useEffect, useRef, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+
+import {
+  MAX_SLOTS,
+  deleteMemory,
+  getGateState,
+  listMemories,
+  lockUploads,
+  unlockUploads,
+  type Memory,
+} from "@/lib/memories.functions";
+
+/** Ten photo/video slots, editable only after the secret code is entered. */
+export function MemoryGallery() {
+  const load = useServerFn(listMemories);
+  const gate = useServerFn(getGateState);
+  const unlock = useServerFn(unlockUploads);
+  const lock = useServerFn(lockUploads);
+  const upload = useServerFn(uploadMemory);
+  const remove = useServerFn(deleteMemory);
+
+  const [items, setItems] = useState<Memory[]>([]);
+  const [unlocked, setUnlocked] = useState(false);
+  const [code, setCode] = useState("");
+  const [codeError, setCodeError] = useState(false);
+  const [showCode, setShowCode] = useState(false);
+  const [busySlot, setBusySlot] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const inputs = useRef<Record<number, HTMLInputElement | null>>({});
+
+  const refresh = async () => {
+    const [media, state] = await Promise.all([load(), gate()]);
+    setItems(media.items);
+    setUnlocked(state.unlocked);
+  };
+
+  useEffect(() => {
+    void refresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const submitCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await unlock({ data: { code } });
+    if (res.ok) {
+      setUnlocked(true);
+      setShowCode(false);
+      setCode("");
+      setCodeError(false);
+    } else {
+      setCodeError(true);
+    }
+  };
+
+  const onPick = async (slot: number, file: File | undefined) => {
+    if (!file) return;
+    setError(null);
+    setBusySlot(slot);
+    try {
+      const form = new FormData();
+      form.set("file", file);
+      form.set("slot", String(slot));
+      await upload({ data: form });
+      await refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setBusySlot(null);
+    }
+  };
+
+  const onRemove = async (slot: number) => {
+    setBusySlot(slot);
+    try {
+      await remove({ data: { slot } });
+      await refresh();
+    } finally {
+      setBusySlot(null);
+    }
+  };
+
+  const slots = Array.from({ length: MAX_SLOTS }, (_, i) => i + 1);
+  const filled = new Map(items.map((m) => [m.slot, m]));
+  const visible = unlocked ? slots : slots.filter((s) => filled.has(s));
+
+  return (
+    <div>
+      {visible.length === 0 ? (
+        <p className="mt-10 text-center text-sm font-light text-muted-foreground">
+          Our photos and videos are coming here soon.
+        </p>
+      ) : (
+        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {visible.map((slot) => {
+            const item = filled.get(slot);
+            return (
+              <figure
+                key={slot}
+                className="group relative aspect-[3/4] overflow-hidden rounded-lg border border-border bg-card/60 shadow-soft"
+              >
+                {item ? (
+                  item.kind === "video" ? (
+                    <video
+                      src={item.url}
+                      controls
+                      playsInline
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={item.url}
+                      alt={item.caption ?? "One of our memories"}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )
+                ) : (
+                  <span className="flex h-full w-full items-center justify-center text-xs font-light text-muted-foreground">
+                    empty
+                  </span>
+                )}
+
+                {unlocked && (
+                  <div className="absolute inset-x-0 bottom-0 flex gap-2 bg-background/80 p-2 backdrop-blur-sm">
+                    <button
+                      type="button"
+                      onClick={() => inputs.current[slot]?.click()}
+                      disabled={busySlot === slot}
+                      className="flex-1 rounded-sm border border-border px-2 py-1 text-[0.65rem] uppercase tracking-widest disabled:opacity-50"
+                    >
+                      {busySlot === slot ? "…" : item ? "replace" : "add"}
+                    </button>
+                    {item && (
+                      <button
+                        type="button"
+                        onClick={() => onRemove(slot)}
+                        disabled={busySlot === slot}
+                        className="rounded-sm border border-border px-2 py-1 text-[0.65rem] uppercase tracking-widest text-destructive disabled:opacity-50"
+                      >
+                        remove
+                      </button>
+                    )}
+                    <input
+                      ref={(el) => {
+                        inputs.current[slot] = el;
+                      }}
+                      type="file"
+                      accept="image/*,video/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        void onPick(slot, e.target.files?.[0]);
+                        e.target.value = "";
+                      }}
+                    />
+                  </div>
+                )}
+              </figure>
+            );
+          })}
+        </div>
+      )}
+
+      {error && (
+        <p className="mt-6 text-center text-xs text-destructive" role="alert">
+          {error}
+        </p>
+      )}
+
+      <div className="mt-10 text-center">
+        {unlocked ? (
+          <button
+            type="button"
+            onClick={async () => {
+              await lock();
+              setUnlocked(false);
+            }}
+            className="text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground underline-offset-4 hover:underline"
+          >
+            done editing
+          </button>
+        ) : showCode ? (
+          <form onSubmit={submitCode} className="mx-auto flex max-w-xs flex-col items-center gap-3">
+            <input
+              type="password"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              placeholder="secret code"
+              autoComplete="off"
+              className="w-full rounded-sm border border-border bg-card/60 px-4 py-2 text-center text-sm outline-none focus:ring-2 focus:ring-ring"
+            />
+            {codeError && <span className="text-xs text-destructive">That's not it.</span>}
+            <button
+              type="submit"
+              className="rounded-sm border border-primary/50 px-5 py-2 text-[0.65rem] uppercase tracking-[0.3em] text-primary"
+            >
+              unlock
+            </button>
+          </form>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setShowCode(true)}
+            className="text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground underline-offset-4 hover:underline"
+          >
+            add photos
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
