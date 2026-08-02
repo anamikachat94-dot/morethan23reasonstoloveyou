@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Happy 23rd Birthday, Anas" },
       {
         property: "og:description",
-        content: "A birthday letter, a countdown and all our little memories.",
+        content: "A birthday letter, a countdown and all our little memories — made with love for Anas, turning 23 on 18 September.",
       },
     ],
   }),

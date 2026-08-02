@@ -80,10 +80,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Happy 23rd Birthday, Anas" },
       {
         name: "description",
-        content: "A little corner of the internet made with love for Anas.",
+        content: "A birthday letter, a countdown and all our little memories — made with love for Anas, turning 23 on 18 September.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Happy 23rd Birthday, Anas" },
+      { name: "twitter:title", content: "Happy 23rd Birthday, Anas" },
+      { property: "og:description", content: "A birthday letter, a countdown and all our little memories — made with love for Anas, turning 23 on 18 September." },
+      { name: "twitter:description", content: "A birthday letter, a countdown and all our little memories — made with love for Anas, turning 23 on 18 September." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/ATXoxYAbrzM79DwnuPak91MQs7j1/social-images/social-1785661657141-social-image.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/ATXoxYAbrzM79DwnuPak91MQs7j1/social-images/social-1785661657141-social-image.webp" },
     ],
     links: [
       {
