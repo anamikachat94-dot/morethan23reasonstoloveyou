@@ -4,7 +4,7 @@ import { Starfield } from "@/components/Starfield";
 import { Countdown } from "@/components/Countdown";
 import { ConfettiButton } from "@/components/ConfettiButton";
 import { MemoryGallery } from "@/components/MemoryGallery";
-import starrySky from "@/assets/starry-sky.jpg";
+import pastelSky from "@/assets/pastel-sky.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -65,13 +65,13 @@ function Index() {
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <img
-          src={starrySky}
+          src={pastelSky}
           alt=""
           width={1920}
           height={1080}
-          className="absolute inset-0 h-full w-full object-cover opacity-70"
+          className="absolute inset-0 h-full w-full object-cover opacity-90"
         />
-        <div className="absolute inset-0 bg-background/50" />
+        <div className="absolute inset-0 bg-background/35" />
         <Starfield />
 
         <div className="relative z-10 max-w-2xl">
