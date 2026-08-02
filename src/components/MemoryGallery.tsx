@@ -9,7 +9,7 @@ import {
   lockUploads,
   unlockUploads,
   uploadMemory,
-
+  type Memory,
 } from "@/lib/memories.functions";
 
 /** Ten photo/video slots, editable only after the secret code is entered. */
