@@ -156,28 +156,12 @@ function Index() {
           <h2 className="text-center font-display text-4xl sm:text-5xl">Us, in pictures</h2>
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
           <p className="mx-auto mt-6 max-w-md text-center text-xs font-light text-muted-foreground">
-            Swap these for our own photos and videos whenever you like.
+            Ten little slots for our photos and videos.
           </p>
-          <div className="mt-12 grid gap-5 sm:grid-cols-3">
-            {gallery.map((photo, i) => (
-              <figure
-                key={photo.alt}
-                className="group overflow-hidden rounded-sm border border-border shadow-soft"
-                style={i === 1 ? { marginTop: "2rem" } : undefined}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  loading="lazy"
-                  width={1024}
-                  height={1280}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </figure>
-            ))}
-          </div>
+          <MemoryGallery />
         </div>
       </section>
+
 
       {/* Timeline */}
       <section className="relative overflow-hidden bg-card/40 px-6 py-28">
