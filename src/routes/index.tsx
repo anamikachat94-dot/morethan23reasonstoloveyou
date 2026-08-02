@@ -25,11 +25,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const gallery = [
-  { src: photo1, alt: "Us together under a sky full of stars" },
-  { src: photo2, alt: "Our hands held together in the fairy lights" },
-  { src: photo3, alt: "A birthday cake glowing with candles" },
-];
 
 const timeline = [
   {
