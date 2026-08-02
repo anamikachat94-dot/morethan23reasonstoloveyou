@@ -13,7 +13,7 @@ export function ConfettiButton() {
   const [index, setIndex] = useState(0);
 
   const burst = async () => {
-    setMessage(MESSAGES[index % MESSAGES.length]);
+    setMessage(MESSAGES[index % MESSAGES.length] ?? MESSAGES[0]!);
     setIndex((i) => i + 1);
     const confetti = (await import("canvas-confetti")).default;
     const colors = ["#e8c07a", "#f5e0a8", "#c9a84c", "#fdf6e3"];
