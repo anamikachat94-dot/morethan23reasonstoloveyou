@@ -113,18 +113,15 @@ function Index() {
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
           <div className="mt-10 space-y-6 text-sm font-light leading-loose text-muted-foreground sm:text-base">
             <p>
-              Babygirl, if I tried to write down everything you are to me, I'd never finish. You
-              are the calm in my noisy days and the reason my phone screen makes me smile before
-              I even read the message.
+              My baby, no amount of letter can ever convey how I feel for you. I love you so much
+              and I cant wait to kiss you today💕. We have been so into each other and idts I can
+              ever get tired of you.
             </p>
             <p>
-              Thank you for the patience, the softness, the way you show up for me without ever
-              being asked. Thank you for being the person I want to tell everything to first.
+              Thankyou for being my strength and for loving me even after I purposely try to be
+              mean. I loveeee you and I hope your day goes really amazing.
             </p>
-            <p>
-              Here's to 23 — to everything you're going to build this year, and to me cheering
-              the loudest the whole way through.
-            </p>
+
           </div>
         </div>
       </section>
@@ -198,6 +195,11 @@ function Index() {
               </li>
             ))}
           </ol>
+          <p className="mt-10 text-center text-sm font-light leading-relaxed text-muted-foreground">
+            We have went to uncountable dates and have created crazy memories together and I hope
+            it stays the same. I love you my baby and I hope this stays.
+          </p>
+
         </div>
       </section>
 
