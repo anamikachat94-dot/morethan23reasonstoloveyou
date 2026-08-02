@@ -58,12 +58,12 @@ const timeline = [
 
 
 const reasons = [
-  "The way you say my name",
-  "Your stupidly perfect laugh",
-  "How safe you make me feel",
-  "Your patience with me",
-  "The way you listen",
-  "That you're mine",
+  "Your eyes",
+  "Wavy hair",
+  "The way you are patient with me",
+  "The way you try to cheer me up",
+  "That dick of yours which basically belongs to me\u{1F609}",
+  "You belong to me",
 ];
 
 function Index() {
