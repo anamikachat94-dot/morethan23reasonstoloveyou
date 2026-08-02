@@ -35,22 +35,27 @@ const gallery = [
 
 const timeline = [
   {
-    title: "The first hello",
-    text: "I had no idea a single conversation could quietly rearrange my whole life.",
+    title: "24th Jan 2025",
+    text: "We met for the first time, I wont lie I was crazy shy and I wanted to hide my face because I felt like i was blushing so much by just looking at you. You were and are so attractive.",
   },
   {
-    title: "The first time you made me laugh like that",
-    text: "The kind of laugh that hurts your stomach. I knew then I wasn't going anywhere.",
+    title: "2nd Feb 2025",
+    text: "We went on our first date. It was the first time I felt I'm coming out of my comfort zone a little but i was still shy. Going arcade with you will always be my peak and favourite date. I had so much fun with you even though I was very conscious with what you were thinking but I was genuinely happy. Thankyou for making me feel safe.",
   },
   {
-    title: "Every ordinary day since",
-    text: "Long calls, silly voice notes, and being called babygirl. My favourite ordinary.",
+    title: "4th Feb",
+    text: "We went to my college to get the medal. The moment we had then is still stuck in my head and I'm glad we didn't had our first official kiss their because I got the chance to fell for you by just staring in your eyes deeply. I love youuu",
   },
   {
-    title: "Today — 23",
-    text: "A whole new year for you, and I get a front row seat. Lucky me.",
+    title: "9th Feb",
+    text: "We had our first kiss and I dont think so I ever felt what I felt that day and I still can't forget the way your heart was beating so fast which was able to confirm that you actually had feelings for me, it was so adorable. I love you",
+  },
+  {
+    title: "8th July",
+    text: "We officially slept together and it is my favourite memory. I wont add anything more to it because I loved it.",
   },
 ];
+
 
 const reasons = [
   "The way you say my name",
@@ -84,11 +89,13 @@ function Index() {
             Happy Birthday,
             <span className="mt-2 block font-script text-6xl text-gold sm:text-8xl">Anas</span>
           </h1>
-          <p className="mx-auto mt-8 max-w-md text-sm font-light leading-relaxed text-muted-foreground sm:text-base">
-            Twenty-three years of you existing, and I'm the one who got lucky. I built this
-            little corner of the internet so you'd know exactly how loved you are.
+          <p className="mx-auto mt-8 max-w-xl text-sm font-light leading-relaxed text-muted-foreground sm:text-base">
+            Happy birthday my love, you might be 23 now but I have more than 23 reasons to love
+            you because each passing day my love just increases more and more for you. I'm so
+            proud of you and I love you for the man you are right now and in future.
           </p>
           <p className="mt-6 font-script text-2xl text-gold">— your girl</p>
+
         </div>
 
         <div className="relative z-10 mt-16 w-full max-w-xl">
@@ -106,18 +113,15 @@ function Index() {
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
           <div className="mt-10 space-y-6 text-sm font-light leading-loose text-muted-foreground sm:text-base">
             <p>
-              Babygirl, if I tried to write down everything you are to me, I'd never finish. You
-              are the calm in my noisy days and the reason my phone screen makes me smile before
-              I even read the message.
+              My baby, no amount of letter can ever convey how I feel for you. I love you so much
+              and I cant wait to kiss you today💕. We have been so into each other and idts I can
+              ever get tired of you.
             </p>
             <p>
-              Thank you for the patience, the softness, the way you show up for me without ever
-              being asked. Thank you for being the person I want to tell everything to first.
+              Thankyou for being my strength and for loving me even after I purposely try to be
+              mean. I loveeee you and I hope your day goes really amazing.
             </p>
-            <p>
-              Here's to 23 — to everything you're going to build this year, and to me cheering
-              the loudest the whole way through.
-            </p>
+
           </div>
         </div>
       </section>
@@ -191,6 +195,11 @@ function Index() {
               </li>
             ))}
           </ol>
+          <p className="mt-10 text-center text-sm font-light leading-relaxed text-muted-foreground">
+            We have went to uncountable dates and have created crazy memories together and I hope
+            it stays the same. I love you my baby and I hope this stays.
+          </p>
+
         </div>
       </section>
 
