@@ -4,7 +4,6 @@ import { Starfield } from "@/components/Starfield";
 import { Countdown } from "@/components/Countdown";
 import { ConfettiButton } from "@/components/ConfettiButton";
 import { MemoryGallery } from "@/components/MemoryGallery";
-import pastelSky from "@/assets/pastel-sky.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
