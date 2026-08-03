@@ -125,13 +125,15 @@ export function MemoryGallery() {
                     </span>
                   )}
                 </div>
-                <figcaption className="absolute inset-x-3 bottom-2 text-center font-script text-xl text-[oklch(0.32_0.09_22)]">
-                  only us
-                </figcaption>
-
+                {!unlocked && (
+                  <figcaption className="absolute inset-x-3 bottom-2 text-center font-script text-xl text-[oklch(0.32_0.09_22)]">
+                    only us
+                  </figcaption>
+                )}
 
                 {unlocked && (
-                  <div className="absolute inset-x-0 bottom-0 flex gap-2 bg-background/80 p-2 backdrop-blur-sm">
+                  <div className="absolute inset-x-3 bottom-2 flex gap-2">
+
                     <button
                       type="button"
                       onClick={() => inputs.current[slot]?.click()}
