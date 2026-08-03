@@ -64,15 +64,9 @@ function Index() {
     <main>
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
-        <img
-          src={pastelSky}
-          alt=""
-          width={1920}
-          height={1080}
-          className="absolute inset-0 h-full w-full object-cover opacity-90"
-        />
-        <div className="absolute inset-0 bg-background/35" />
+        <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,oklch(0.34_0.11_24)_0%,transparent_65%)]" />
         <Starfield />
+
 
         <div className="relative z-10 max-w-2xl">
           <p className="text-[0.65rem] uppercase tracking-[0.45em] text-muted-foreground">
