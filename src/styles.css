@@ -166,6 +166,14 @@
   color: transparent;
 }
 
+@utility polaroid {
+  background: oklch(0.98 0.006 90);
+  padding: 0.75rem 0.75rem 2.75rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
 @layer base {
   * {
     border-color: var(--color-border);
