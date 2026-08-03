@@ -180,6 +180,32 @@ function Index() {
         </div>
       </section>
 
+      {/* Our song */}
+      <section className="px-6 py-28">
+        <div className="mx-auto max-w-xl text-center">
+          <h2 className="font-display text-4xl sm:text-5xl">Our song</h2>
+          <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
+          <p className="mx-auto mt-6 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
+            This is the song I think of when I see you my love💕
+          </p>
+          <div className="mt-10 overflow-hidden rounded-xl border border-border shadow-soft">
+            <iframe
+              title="Our song on Spotify"
+              src="https://open.spotify.com/embed/track/3iBgrkexCzVuPy4O9vx7Mf?utm_source=generator"
+              width="100%"
+              height="152"
+              frameBorder="0"
+              loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              className="block w-full"
+            />
+          </div>
+          <p className="mt-4 text-[0.6rem] uppercase tracking-[0.35em] text-muted-foreground">
+            press play
+          </p>
+        </div>
+      </section>
+
       {/* Surprise */}
       <section className="relative overflow-hidden px-6 py-32 text-center">
         <Starfield count={50} />
