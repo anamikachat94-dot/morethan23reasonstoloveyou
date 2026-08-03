@@ -4,7 +4,6 @@ import { Starfield } from "@/components/Starfield";
 import { Countdown } from "@/components/Countdown";
 import { ConfettiButton } from "@/components/ConfettiButton";
 import { MemoryGallery } from "@/components/MemoryGallery";
-import pastelSky from "@/assets/pastel-sky.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -64,15 +63,9 @@ function Index() {
     <main>
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
-        <img
-          src={pastelSky}
-          alt=""
-          width={1920}
-          height={1080}
-          className="absolute inset-0 h-full w-full object-cover opacity-90"
-        />
-        <div className="absolute inset-0 bg-background/35" />
+        <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,oklch(0.34_0.11_24)_0%,transparent_65%)]" />
         <Starfield />
+
 
         <div className="relative z-10 max-w-2xl">
           <p className="text-[0.65rem] uppercase tracking-[0.45em] text-muted-foreground">
@@ -146,10 +139,13 @@ function Index() {
       {/* Gallery */}
       <section className="px-6 py-28">
         <div className="mx-auto max-w-5xl">
-          <h2 className="text-center font-display text-4xl sm:text-5xl">Us, in pictures</h2>
+          <h2 className="text-center font-display text-4xl sm:text-5xl">
+            Only
+            <span className="ml-3 font-script text-5xl sm:text-6xl">Us</span>
+          </h2>
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
           <p className="mx-auto mt-6 max-w-md text-center text-xs font-light text-muted-foreground">
-            Ten little slots for our photos and videos.
+            Every moment feels a little brighter when it's just us.
           </p>
           <MemoryGallery />
         </div>
