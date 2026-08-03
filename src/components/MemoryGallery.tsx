@@ -92,35 +92,43 @@ export function MemoryGallery() {
           Our photos and videos are coming here soon.
         </p>
       ) : (
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {visible.map((slot) => {
+        <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          {visible.map((slot, i) => {
             const item = filled.get(slot);
+            const tilt = [-3.5, 2.5, -1.5, 3, -2.5, 1.8][i % 6];
             return (
               <figure
                 key={slot}
-                className="group relative aspect-[3/4] overflow-hidden rounded-lg border border-border bg-card/60 shadow-soft"
+                style={{ transform: `rotate(${tilt}deg)` }}
+                className="polaroid group relative mx-auto w-full max-w-[19rem] rounded-[2px] hover:!rotate-0"
               >
-                {item ? (
-                  item.kind === "video" ? (
-                    <video
-                      src={item.url}
-                      controls
-                      playsInline
-                      className="h-full w-full object-cover"
-                    />
+                <div className="relative aspect-square overflow-hidden bg-secondary/40">
+                  {item ? (
+                    item.kind === "video" ? (
+                      <video
+                        src={item.url}
+                        controls
+                        playsInline
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={item.url}
+                        alt={item.caption ?? "One of our memories"}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    )
                   ) : (
-                    <img
-                      src={item.url}
-                      alt={item.caption ?? "One of our memories"}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  )
-                ) : (
-                  <span className="flex h-full w-full items-center justify-center text-xs font-light text-muted-foreground">
-                    empty
-                  </span>
-                )}
+                    <span className="flex h-full w-full items-center justify-center text-xs font-light tracking-widest text-primary-foreground/60">
+                      empty
+                    </span>
+                  )}
+                </div>
+                <figcaption className="absolute inset-x-3 bottom-2 text-center font-script text-xl text-[oklch(0.32_0.09_22)]">
+                  only us
+                </figcaption>
+
 
                 {unlocked && (
                   <div className="absolute inset-x-0 bottom-0 flex gap-2 bg-background/80 p-2 backdrop-blur-sm">
