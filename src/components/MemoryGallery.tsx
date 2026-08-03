@@ -138,7 +138,7 @@ export function MemoryGallery() {
                       type="button"
                       onClick={() => inputs.current[slot]?.click()}
                       disabled={busySlot === slot}
-                      className="flex-1 rounded-sm border border-border px-2 py-1 text-[0.65rem] uppercase tracking-widest disabled:opacity-50"
+                      className="flex-1 rounded-sm border border-[oklch(0.32_0.09_22/25%)] px-2 py-1 text-[0.65rem] uppercase tracking-widest text-[oklch(0.32_0.09_22)] disabled:opacity-50"
                     >
                       {busySlot === slot ? "…" : item ? "replace" : "add"}
                     </button>
@@ -147,7 +147,7 @@ export function MemoryGallery() {
                         type="button"
                         onClick={() => onRemove(slot)}
                         disabled={busySlot === slot}
-                        className="rounded-sm border border-border px-2 py-1 text-[0.65rem] uppercase tracking-widest text-destructive disabled:opacity-50"
+                        className="rounded-sm border border-[oklch(0.32_0.09_22/25%)] px-2 py-1 text-[0.65rem] uppercase tracking-widest text-[oklch(0.5_0.16_25)] disabled:opacity-50"
                       >
                         remove
                       </button>
