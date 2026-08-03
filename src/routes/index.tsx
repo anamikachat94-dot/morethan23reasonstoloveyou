@@ -139,10 +139,13 @@ function Index() {
       {/* Gallery */}
       <section className="px-6 py-28">
         <div className="mx-auto max-w-5xl">
-          <h2 className="text-center font-display text-4xl sm:text-5xl">Us, in pictures</h2>
+          <h2 className="text-center font-display text-4xl sm:text-5xl">
+            Only
+            <span className="ml-3 font-script text-5xl sm:text-6xl">Us</span>
+          </h2>
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
           <p className="mx-auto mt-6 max-w-md text-center text-xs font-light text-muted-foreground">
-            Ten little slots for our photos and videos.
+            Every moment feels a little brighter when it's just us.
           </p>
           <MemoryGallery />
         </div>
