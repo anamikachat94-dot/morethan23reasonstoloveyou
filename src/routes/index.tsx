@@ -3,7 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Starfield } from "@/components/Starfield";
 import { Countdown } from "@/components/Countdown";
 import { ConfettiButton } from "@/components/ConfettiButton";
-import { MemoryGallery } from "@/components/MemoryGallery";
+import { BackgroundMusic } from "@/components/BackgroundMusic";
+import { RotatingDiskGallery } from "@/components/RotatingDiskGallery";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,7 +24,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
-
 
 const timeline = [
   {
@@ -48,7 +48,6 @@ const timeline = [
   },
 ];
 
-
 const reasons = [
   "Your eyes",
   "Wavy hair",
@@ -61,11 +60,13 @@ const reasons = [
 function Index() {
   return (
     <main>
+      {/* Background Audio Player */}
+      <BackgroundMusic />
+
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,oklch(0.34_0.11_24)_0%,transparent_65%)]" />
         <Starfield />
-
 
         <div className="relative z-10 max-w-2xl">
           <p className="text-[0.65rem] uppercase tracking-[0.45em] text-muted-foreground">
@@ -81,7 +82,6 @@ function Index() {
             proud of you and I love you for the man you are right now and in future.
           </p>
           <p className="mt-6 font-script text-2xl text-gold">— your girl</p>
-
         </div>
 
         <div className="relative z-10 mt-16 w-full max-w-xl">
@@ -92,22 +92,57 @@ function Index() {
         </div>
       </section>
 
-      {/* Letter */}
-      <section className="relative px-6 py-28">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-4xl sm:text-5xl">A little letter</h2>
-          <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
-          <div className="mt-10 space-y-6 text-sm font-light leading-loose text-muted-foreground sm:text-base">
-            <p>
-              My baby, no amount of letter can ever convey how I feel for you. I love you so much
-              and I cant wait to kiss you today💕. We have been so into each other and idts I can
-              ever get tired of you.
-            </p>
-            <p>
-              Thankyou for being my strength and for loving me even after I purposely try to be
-              mean. I loveeee you and I hope your day goes really amazing.
-            </p>
+      {/* Letter Section — lace frame as full card background */}
+      <section className="relative px-6 py-20 flex items-center justify-center">
+        <div
+          className="relative mx-auto w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_rgba(0,0,0,0.7)]"
+          style={{ maxWidth: "460px" }}
+        >
+          {/* Lace frame fills the entire card — burgundy background + white lace + red bow */}
+          <img
+            src="/letter-frame.jpg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
+          />
 
+          {/* Aspect-ratio spacer matching the frame image's portrait proportions */}
+          <div style={{ paddingTop: "136%" }} />
+
+          {/* Letter content — centred inside the inner cream parchment of the frame */}
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center text-center"
+            style={{ padding: "21% 14% 20% 14%" }}
+          >
+            <div className="relative z-10 w-full">
+              {/* Heading — uses script font for an elegant handwritten letter feel */}
+              <h2
+                className="font-script text-2xl sm:text-3xl"
+                style={{ color: "#2A1810" }}
+              >
+                A little letter
+              </h2>
+              <div
+                className="mx-auto mt-2 h-px w-10"
+                style={{ backgroundColor: "#8B4A3C" }}
+              />
+              {/* Body — italic, compact, fits inside the parchment area */}
+              <div
+                className="mt-4 space-y-3 text-[0.72rem] sm:text-[0.8rem] font-normal italic leading-[1.75]"
+                style={{ color: "#3A1F15" }}
+              >
+                <p>
+                  My baby, no amount of letter can ever convey how I feel for you.
+                  I love you so much and I cant wait to kiss you today💕.
+                  We have been so into each other and idts I can ever get tired of you.
+                </p>
+                <p>
+                  Thankyou for being my strength and for loving me even after
+                  I purposely try to be mean. I loveeee you and I hope your
+                  day goes really amazing.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -136,21 +171,8 @@ function Index() {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="px-6 py-28">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="text-center font-display text-4xl sm:text-5xl">
-            Only
-            <span className="ml-3 font-script text-5xl sm:text-6xl">Us</span>
-          </h2>
-          <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
-          <p className="mx-auto mt-6 max-w-md text-center text-xs font-light text-muted-foreground">
-            Every moment feels a little brighter when it's just us.
-          </p>
-          <MemoryGallery />
-        </div>
-      </section>
-
+      {/* Scroll-Driven Rotating Disk Gallery */}
+      <RotatingDiskGallery />
 
       {/* Timeline */}
       <section className="relative overflow-hidden bg-card/40 px-6 py-28">
@@ -171,33 +193,6 @@ function Index() {
           <p className="mt-10 text-center text-sm font-light leading-relaxed text-muted-foreground">
             We have went to uncountable dates and have created crazy memories together and I hope
             it stays the same. I love you my baby and I hope this stays.
-          </p>
-
-        </div>
-      </section>
-
-      {/* Our song */}
-      <section className="px-6 py-28">
-        <div className="mx-auto max-w-xl text-center">
-          <h2 className="font-display text-4xl sm:text-5xl">Our song</h2>
-          <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
-          <p className="mx-auto mt-6 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
-            This is the song I think of when I see you my love💕
-          </p>
-          <div className="mt-10 overflow-hidden rounded-xl border border-border shadow-soft">
-            <iframe
-              title="Our song on Spotify"
-              src="https://open.spotify.com/embed/track/3iBgrkexCzVuPy4O9vx7Mf?utm_source=generator"
-              width="100%"
-              height="152"
-              frameBorder="0"
-              loading="lazy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              className="block w-full"
-            />
-          </div>
-          <p className="mt-4 text-[0.6rem] uppercase tracking-[0.35em] text-muted-foreground">
-            press play
           </p>
         </div>
       </section>
