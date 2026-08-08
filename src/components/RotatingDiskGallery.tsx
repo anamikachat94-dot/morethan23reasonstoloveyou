@@ -19,7 +19,7 @@ const DEFAULT_MEDIA: Memory[] = [
   { id: "def-5", slot: 5, kind: "image", caption: "My favourite person", url: "/e pic.jpeg" },
   { id: "def-6", slot: 6, kind: "video", caption: "Love our kisses💘", url: "/f vid.mov" },
   { id: "def-7", slot: 7, kind: "image", caption: "Every moment with you", url: "/g pic.jpeg" },
-  { id: "def-8", slot: 8, kind: "video", caption: "Your scared ass", url: "/h vid.mov" },
+  { id: "def-8", slot: 8, kind: "video", caption: "us❤️", url: "/h vid.mov" },
   { id: "def-9", slot: 9, kind: "image", caption: "Ps- I still love you💕", url: "/i pic.jpeg" },
 ];
 
@@ -207,10 +207,12 @@ export function RotatingDiskGallery() {
                           <video
                             key={card.media.url}
                             src={card.media.url}
+                            poster={card.media.url === "/h vid.mov" ? "/h vid-poster.jpg" : undefined}
                             autoPlay
                             muted
                             loop
                             playsInline
+                            preload="auto"
                             className="h-full w-full object-contain"
                           />
                         ) : (
