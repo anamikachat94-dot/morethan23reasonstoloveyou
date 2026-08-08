@@ -17,7 +17,7 @@ const DEFAULT_MEDIA: Memory[] = [
   { id: "def-3", slot: 3, kind: "image", caption: "Babygirl💘", url: "/c pic.jpeg" },
   { id: "def-4", slot: 4, kind: "video", caption: "Marking my territory❤️", url: "/d vid.mov" },
   { id: "def-5", slot: 5, kind: "image", caption: "My favourite person", url: "/e pic.jpeg" },
-  { id: "def-6", slot: 6, kind: "video", caption: "Love your kisses💘", url: "/f vid.mov" },
+  { id: "def-6", slot: 6, kind: "video", caption: "Love our kisses💘", url: "/f vid.mov" },
   { id: "def-7", slot: 7, kind: "image", caption: "Every moment with you", url: "/g pic.jpeg" },
   { id: "def-8", slot: 8, kind: "video", caption: "Your scared ass", url: "/h vid.mov" },
   { id: "def-9", slot: 9, kind: "image", caption: "Ps- I still love you💕", url: "/i pic.jpeg" },
