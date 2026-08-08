@@ -31,6 +31,8 @@ function Certificate({ onClose }: { onClose: () => void }) {
           src="/certificate.png"
           alt="Certificate: Best Boyfriend In The World, presented to Anas"
           className="max-h-[90vh] w-auto max-w-[90vw] rounded shadow-2xl"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
     </div>,

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import { Starfield } from "@/components/Starfield";
 import { Countdown } from "@/components/Countdown";
@@ -20,6 +21,9 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "A birthday letter, a countdown and all our little memories — made with love for Anas, turning 23 on 18 September.",
       },
+    ],
+    links: [
+      { rel: "preload", href: "/certificate.png", as: "image" },
     ],
   }),
   component: Index,
@@ -53,6 +57,19 @@ const timeline = [
 ];
 
 function Index() {
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 10) {
+        setHasScrolled(true);
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <main className="relative">
       {/* Global starfield — covers the entire page */}
@@ -84,9 +101,19 @@ function Index() {
               alt="Postcard"
               className="w-full h-auto rounded"
             />
-            {/* Text sits over the blank right message area of the postcard.
-                The postcard image is ~50/50 split: left = photo, right = blank message side.
-                We offset from the right edge and vertically center below the stamp area. */}
+            {/* Kiss marks overlay — fades in on first scroll, sits between base image and text */}
+            <img
+              src="/postcard.png"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full rounded pointer-events-none select-none"
+              style={{
+                opacity: hasScrolled ? 1 : 0,
+                transition: "opacity 0.6s ease",
+                objectFit: "fill",
+              }}
+            />
+            {/* Text always on top — same format, burgundy, right half of postcard */}
             <div
               className="absolute flex flex-col justify-center"
               style={{
@@ -94,6 +121,7 @@ function Index() {
                 right: "4%",
                 width: "44%",
                 bottom: "8%",
+                zIndex: 10,
               }}
             >
               <p
