@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 const MESSAGES = [
   "23 looks so good on you.",
@@ -9,10 +10,10 @@ const MESSAGES = [
 ];
 
 function Certificate({ onClose }: { onClose: () => void }) {
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-6"
-      style={{ backgroundColor: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-6"
+      style={{ backgroundColor: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)" }}
       onClick={onClose}
     >
       <div
@@ -32,7 +33,8 @@ function Certificate({ onClose }: { onClose: () => void }) {
           className="max-h-[90vh] w-auto max-w-[90vw] rounded shadow-2xl"
         />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
