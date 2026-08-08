@@ -54,14 +54,17 @@ const timeline = [
 
 function Index() {
   return (
-    <main>
+    <main className="relative">
+      {/* Global starfield — covers the entire page */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <Starfield count={120} />
+      </div>
+
       {/* Background Audio Player */}
       <BackgroundMusic />
 
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,oklch(0.34_0.11_24)_0%,transparent_65%)]" />
-        <Starfield />
 
         <div className="relative z-10 max-w-2xl">
           <p className="text-[0.65rem] uppercase tracking-[0.45em] text-muted-foreground">
@@ -143,8 +146,7 @@ function Index() {
       </section>
 
     {/* Free Passes */}
-      <section className="relative overflow-hidden bg-card/40 px-4 py-28 sm:px-6">
-        <Starfield count={40} />
+      <section className="relative overflow-hidden px-4 py-28 sm:px-6">
         <div className="relative z-10 mx-auto max-w-5xl">
           <h2 className="text-center font-display text-4xl sm:text-5xl">
             12 Free tickets to Get Spoiled by Your Girlfriend
@@ -170,7 +172,7 @@ function Index() {
       <RotatingDiskGallery />
 
       {/* Timeline */}
-      <section className="relative overflow-hidden bg-card/40 px-6 py-28">
+      <section className="relative overflow-hidden px-6 py-28">
         <div className="mx-auto max-w-2xl">
           <h2 className="text-center font-display text-4xl sm:text-5xl">Our little timeline</h2>
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
@@ -194,7 +196,6 @@ function Index() {
 
       {/* Surprise */}
       <section className="relative overflow-hidden px-6 py-32 text-center">
-        <Starfield count={50} />
         <div className="relative z-10 mx-auto max-w-xl">
           <h2 className="font-display text-4xl sm:text-5xl">One last surprise</h2>
           <p className="mx-auto mt-6 max-w-sm text-sm font-light text-muted-foreground">

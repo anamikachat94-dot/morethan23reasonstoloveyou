@@ -102,12 +102,7 @@
   --font-body: "Karla", system-ui, sans-serif;
   --font-script: "Parisienne", cursive;
 
-  --gradient-night: radial-gradient(
-      120% 90% at 20% 0%,
-      oklch(0.32 0.1 24) 0%,
-      transparent 60%
-    ),
-    linear-gradient(180deg, oklch(0.27 0.09 22) 0%, oklch(0.22 0.08 20) 100%);
+  --gradient-night: radial-gradient(120% 80% at 50% 0%, oklch(0.34 0.11 24) 0%, transparent 65%);
   --gradient-gold: linear-gradient(
     100deg,
     oklch(0.95 0.025 80),
@@ -179,9 +174,14 @@
     border-color: var(--color-border);
   }
 
-  body {
+  html {
     background-color: var(--color-background);
     background-image: var(--gradient-night);
+    background-attachment: fixed;
+  }
+
+  body {
+    background: transparent;
     color: var(--color-foreground);
     font-family: var(--font-body);
   }
