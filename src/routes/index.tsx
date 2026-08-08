@@ -12,9 +12,15 @@ const UNLOCK_TIME = new Date("2026-09-17T18:30:00.000Z").getTime();
 
 export const Route = createFileRoute("/")({
   beforeLoad: () => {
-    // Block access until unlock time, unless dev bypass is set
-    if (Date.now() < UNLOCK_TIME && typeof sessionStorage !== "undefined" && !sessionStorage.getItem("dev_bypass")) {
-      throw redirect({ to: "/splash" });
+    if (Date.now() < UNLOCK_TIME) {
+      // SSR: always redirect to splash (no sessionStorage on server)
+      if (typeof window === "undefined") {
+        throw redirect({ to: "/splash" });
+      }
+      // Client: allow through only if dev bypass is set
+      if (!sessionStorage.getItem("dev_bypass")) {
+        throw redirect({ to: "/splash" });
+      }
     }
   },
   head: () => ({
