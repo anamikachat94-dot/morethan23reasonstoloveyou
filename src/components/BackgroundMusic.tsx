@@ -37,7 +37,7 @@ export function BackgroundMusic() {
   return (
     <audio
       ref={audioRef}
-      src="/glue-song.mp3"
+      src="/glue-song.webm"
       loop
       preload="auto"
       className="hidden"
