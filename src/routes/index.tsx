@@ -74,12 +74,44 @@ function Index() {
             Happy Birthday,
             <span className="mt-2 block font-script text-6xl text-gold sm:text-8xl">Anas</span>
           </h1>
-          <p className="mx-auto mt-8 max-w-xl text-sm font-light leading-relaxed text-muted-foreground sm:text-base">
-            Happy birthday my love, you might be 23 now but I have more than 23 reasons to love
-            you because each passing day my love just increases more and more for you. I'm so
-            proud of you and I love you for the man you are right now and in future.
-          </p>
-          <p className="mt-6 font-script text-2xl text-gold">— your girl</p>
+        </div>
+
+        {/* Postcard — image untouched, message overlaid on right half */}
+        <div className="relative z-10 mt-10 w-full max-w-2xl px-2">
+          <div className="relative w-full">
+            <img
+              src="/postcard-hero.png"
+              alt="Postcard"
+              className="w-full h-auto rounded"
+            />
+            {/* Text sits over the blank right message area of the postcard.
+                The postcard image is ~50/50 split: left = photo, right = blank message side.
+                We offset from the right edge and vertically center below the stamp area. */}
+            <div
+              className="absolute flex flex-col justify-center"
+              style={{
+                top: "28%",
+                right: "4%",
+                width: "44%",
+                bottom: "8%",
+              }}
+            >
+              <p
+                className="font-body leading-snug"
+                style={{ color: "#6d1220", fontSize: "clamp(0.5rem, 1.8vw, 0.78rem)" }}
+              >
+                Happy birthday my love, you might be 23 now but I have more than 23 reasons to
+                love you because each passing day my love just increases more and more for you.
+                I'm so proud of you and I love you for the man you are right now and in future.
+              </p>
+              <p
+                className="font-script mt-2"
+                style={{ color: "#6d1220", fontSize: "clamp(0.7rem, 2.5vw, 1.1rem)" }}
+              >
+                — your girl
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="relative z-10 mt-16 w-full max-w-xl">
