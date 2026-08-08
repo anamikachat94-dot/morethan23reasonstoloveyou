@@ -27,6 +27,10 @@ export const Route = createFileRoute("/")({
 
 const timeline = [
   {
+    title: "13th Jan 2025",
+    text: "When we first started talking and I roasted your ass and randomly how the vibe ended up being how we are presently right now is crazy because I never thought I can fall for someone so much everyday. (Ps- I still can't forget the fact I added you on cf while our chat ss was already posted their and you were so chill about it.)",
+  },
+  {
     title: "24th Jan 2025",
     text: "We met for the first time, I wont lie I was crazy shy and I wanted to hide my face because I felt like i was blushing so much by just looking at you. You were and are so attractive.",
   },
@@ -46,15 +50,6 @@ const timeline = [
     title: "8th July",
     text: "We officially slept together and it is my favourite memory. I wont add anything more to it because I loved it.",
   },
-];
-
-const reasons = [
-  "Your eyes",
-  "Wavy hair",
-  "The way you are patient with me",
-  "The way you try to cheer me up",
-  "That dick of yours which basically belongs to me\u{1F609}",
-  "You belong to me",
 ];
 
 function Index() {
@@ -95,12 +90,12 @@ function Index() {
       {/* Letter Section — lace frame as full card background */}
       <section className="relative px-6 py-20 flex items-center justify-center">
         <div
-          className="relative mx-auto w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_rgba(0,0,0,0.7)]"
+          className="relative mx-auto w-full overflow-hidden rounded-2xl "
           style={{ maxWidth: "460px" }}
         >
           {/* Lace frame fills the entire card — burgundy background + white lace + red bow */}
           <img
-            src="/letter-frame.jpg"
+            src="/letter-frame.png"
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
@@ -147,29 +142,29 @@ function Index() {
         </div>
       </section>
 
-      {/* Reasons */}
-      <section className="relative overflow-hidden bg-card/40 px-6 py-28">
+    {/* Free Passes */}
+      <section className="relative overflow-hidden bg-card/40 px-4 py-28 sm:px-6">
         <Starfield count={40} />
-        <div className="relative z-10 mx-auto max-w-3xl">
+        <div className="relative z-10 mx-auto max-w-5xl">
           <h2 className="text-center font-display text-4xl sm:text-5xl">
-            A few of my favourite things about you
+            12 Free tickets to Get Spoiled by Your Girlfriend
           </h2>
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
-          <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-            {reasons.map((reason, i) => (
-              <li
-                key={reason}
-                className="flex items-center gap-4 rounded-sm border border-border bg-background/40 px-5 py-4 backdrop-blur-sm"
-              >
-                <span className="font-display text-lg text-gold">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="text-sm font-light">{reason}</span>
-              </li>
+          <div className="mt-12 flex flex-row flex-nowrap items-center justify-center gap-4">
+            {["/1.png", "/2.png", "/3.png"].map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={`Free Pass Ticket ${i + 1}`}
+                className="h-auto w-auto max-h-[160px] sm:max-h-[240px] max-w-[30%] rounded-lg object-contain"
+              />
             ))}
-          </ul>
+
+          </div>
         </div>
       </section>
+
+
 
       {/* Scroll-Driven Rotating Disk Gallery */}
       <RotatingDiskGallery />
@@ -211,12 +206,6 @@ function Index() {
         </div>
       </section>
 
-      <footer className="border-t border-border px-6 py-12 text-center">
-        <p className="font-script text-2xl text-gold">Happy 23rd, babygirl</p>
-        <p className="mt-3 text-[0.6rem] uppercase tracking-[0.35em] text-muted-foreground">
-          made with love · 18 September
-        </p>
-      </footer>
     </main>
   );
 }
