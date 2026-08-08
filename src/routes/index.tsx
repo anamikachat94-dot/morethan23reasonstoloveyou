@@ -153,12 +153,12 @@ function Index() {
           </h2>
           <div className="mx-auto mt-4 h-px w-16 bg-primary/50" />
           <div className="mt-12 flex flex-row flex-nowrap items-center justify-center gap-4">
-            {["/1.png", "/2.png", "/3.png"].map((src, i) => (
+            {["/1.png", "/2.png", "/3.png","/4.png"].map((src, i) => (
               <img
                 key={i}
                 src={src}
                 alt={`Free Pass Ticket ${i + 1}`}
-                className="h-auto w-auto max-h-[160px] sm:max-h-[240px] max-w-[30%] rounded-lg object-contain"
+                className="h-auto w-auto max-h-[240px] sm:max-h-[320px] max-w-[25%] rounded-lg object-contain"
               />
             ))}
 
