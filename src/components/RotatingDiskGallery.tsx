@@ -52,6 +52,8 @@ export function RotatingDiskGallery() {
   const mediaEls = useRef<Record<string, HTMLVideoElement | HTMLImageElement | null>>({});
   // One ref per card frame (0, 1, 2) — the DOM node we inject the active media into
   const frameRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  // Track which url is currently displayed in each frame so caption stays in sync
+  const [frameUrls, setFrameUrls] = useState<Record<number, string>>({});
 
   const refresh = async () => {
     try {
@@ -121,19 +123,21 @@ export function RotatingDiskGallery() {
 
   // Imperatively move each media element into its target card frame — zero remounts
   useEffect(() => {
+    const next: Record<number, string> = {};
     cardSlots.forEach((card, idx) => {
       const frame = frameRefs.current[idx];
       const el = mediaEls.current[card.media.url];
       if (!frame || !el) return;
-      // Only move if not already in the right frame
       if (el.parentNode !== frame) {
         frame.appendChild(el);
       }
+      next[idx] = card.media.url;
       // Ensure video is playing
       if (el instanceof HTMLVideoElement && el.paused) {
         void el.play().catch(() => {/* autoplay policy — silent */});
       }
     });
+    setFrameUrls(next);
   });
 
   const submitCode = async (e: React.FormEvent) => {
@@ -269,7 +273,7 @@ export function RotatingDiskGallery() {
                         className="mt-2 text-center font-display italic text-[0.8rem] sm:text-[0.85rem] leading-snug truncate"
                         style={{ color: "#6d1220", fontWeight: 500 }}
                       >
-                        {card.media.caption || `Memory #${card.slotNum}`}
+                        {allMediaList.find((m) => m.url === frameUrls[idx])?.caption || card.media.caption}
                       </figcaption>
 
                       {/* Edit Mode */}
