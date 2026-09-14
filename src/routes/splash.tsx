@@ -59,6 +59,7 @@ function SplashPage() {
       const t = setTimeout(() => setFadeOut(true), 300);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, [unlocked]);
 
   const handleClick = () => {

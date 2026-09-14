@@ -203,25 +203,29 @@ export function RotatingDiskGallery() {
                     >
                       {/* Media frame — object-contain keeps original proportions, no crop */}
                       <div className="relative w-full overflow-hidden bg-neutral-900 rounded-[2px]" style={{ height: "145px" }}>
-                        {card.media.kind === "video" ? (
-                          <video
-                            key={card.media.url}
-                            src={card.media.url}
-                            poster={card.media.url === "/h vid.mov" ? "/h vid-poster.jpg" : undefined}
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            preload="auto"
-                            className="h-full w-full object-contain"
-                          />
-                        ) : (
-                          <img
-                            key={card.media.url}
-                            src={card.media.url}
-                            alt={card.media.caption || `Memory ${card.slotNum}`}
-                            className="h-full w-full object-contain"
-                          />
+                        {allMediaList.map((m) =>
+                          m.kind === "video" ? (
+                            <video
+                              key={m.url}
+                              src={m.url}
+                              poster={m.url === "/h vid.mov" ? "/h vid-poster.jpg" : undefined}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              preload="auto"
+                              className="absolute inset-0 h-full w-full object-contain"
+                              style={{ display: m.url === card.media.url ? "block" : "none" }}
+                            />
+                          ) : (
+                            <img
+                              key={m.url}
+                              src={m.url}
+                              alt={m.caption || `Memory`}
+                              className="absolute inset-0 h-full w-full object-contain"
+                              style={{ display: m.url === card.media.url ? "block" : "none" }}
+                            />
+                          )
                         )}
                       </div>
 
