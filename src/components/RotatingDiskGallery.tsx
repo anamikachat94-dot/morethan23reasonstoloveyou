@@ -19,7 +19,7 @@ const DEFAULT_MEDIA: Memory[] = [
   { id: "def-5", slot: 5, kind: "image", caption: "My favourite person", url: "/e pic.jpeg" },
   { id: "def-6", slot: 6, kind: "video", caption: "Love our kisses💘", url: "/f vid.mov" },
   { id: "def-7", slot: 7, kind: "image", caption: "Every moment with you", url: "/g pic.jpeg" },
-  { id: "def-8", slot: 8, kind: "video", caption: "us❤️", url: "/h vid.webm" },
+  { id: "def-8", slot: 8, kind: "video", caption: "us❤️", url: "/h vid.mov" },
   { id: "def-9", slot: 9, kind: "image", caption: "Ps- I still love you💕", url: "/i pic.jpeg" },
 ];
 
@@ -52,8 +52,6 @@ export function RotatingDiskGallery() {
   const mediaEls = useRef<Record<string, HTMLVideoElement | HTMLImageElement | null>>({});
   // One ref per card frame (0, 1, 2) — the DOM node we inject the active media into
   const frameRefs = useRef<Record<number, HTMLDivElement | null>>({});
-  // Track which url is currently displayed in each frame so caption stays in sync
-  const [frameUrls, setFrameUrls] = useState<Record<number, string>>({});
 
   const refresh = async () => {
     try {
@@ -83,8 +81,8 @@ export function RotatingDiskGallery() {
         // currentScroll goes from 0 (top of section) to totalScrollable (bottom)
         const currentScroll = Math.max(0, -rect.top);
         // Map scroll position linearly to rotation:
-        // full scroll range = 9 steps × DEGREES_PER_STEP = 1080°
-        const totalDegrees = DEFAULT_MEDIA.length * DEGREES_PER_STEP; // 1080°
+        // full scroll range = 6 steps × DEGREES_PER_STEP = 720°
+        const totalDegrees = (DEFAULT_MEDIA.length - 3) * DEGREES_PER_STEP; // 720°
         const angle = (currentScroll / totalScrollable) * totalDegrees;
         setRotationAngle(angle);
       });
@@ -107,11 +105,11 @@ export function RotatingDiskGallery() {
 
   // Current media step: derived from rotation angle, clamped to valid range
   const MEDIA_COUNT = DEFAULT_MEDIA.length; // 9
-  const totalSteps = MEDIA_COUNT; // 9 steps: abc→bcd→...→iab (full wrap)
+  const totalSteps = MEDIA_COUNT - 3; // 6
   const rawStep = rotationAngle / DEGREES_PER_STEP;
-  const currentStep = Math.min(totalSteps - 1, Math.max(0, Math.floor(rawStep)));
+  const currentStep = Math.min(totalSteps, Math.max(0, Math.floor(rawStep)));
 
-  const slotIndex0 = currentStep % MEDIA_COUNT;
+  const slotIndex0 = currentStep;
   const slotIndex1 = (currentStep + 1) % MEDIA_COUNT;
   const slotIndex2 = (currentStep + 2) % MEDIA_COUNT;
 
@@ -123,27 +121,20 @@ export function RotatingDiskGallery() {
 
   // Imperatively move each media element into its target card frame — zero remounts
   useEffect(() => {
-    const next: Record<number, string> = {};
     cardSlots.forEach((card, idx) => {
       const frame = frameRefs.current[idx];
       const el = mediaEls.current[card.media.url];
       if (!frame || !el) return;
+      // Only move if not already in the right frame
       if (el.parentNode !== frame) {
         frame.appendChild(el);
       }
-      next[idx] = card.media.url;
       // Ensure video is playing
       if (el instanceof HTMLVideoElement && el.paused) {
         void el.play().catch(() => {/* autoplay policy — silent */});
       }
     });
-    // Only update state if urls actually changed to avoid infinite render loop
-    setFrameUrls((prev) => {
-      const changed = cardSlots.some((_, idx) => prev[idx] !== next[idx]);
-      return changed ? next : prev;
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStep]);
+  });
 
   const submitCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,7 +176,7 @@ export function RotatingDiskGallery() {
               key={m.url}
               ref={(el) => { mediaEls.current[m.url] = el; }}
               src={m.url}
-              poster={m.url === "/h vid.webm" ? "/h vid-poster.jpg" : undefined}
+              poster={m.url === "/h vid.mov" ? "/h vid-poster.jpg" : undefined}
               autoPlay
               muted
               loop
@@ -278,7 +269,7 @@ export function RotatingDiskGallery() {
                         className="mt-2 text-center font-display italic text-[0.8rem] sm:text-[0.85rem] leading-snug truncate"
                         style={{ color: "#6d1220", fontWeight: 500 }}
                       >
-                        {allMediaList.find((m) => m.url === frameUrls[idx])?.caption || card.media.caption}
+                        {card.media.caption || `Memory #${card.slotNum}`}
                       </figcaption>
 
                       {/* Edit Mode */}
