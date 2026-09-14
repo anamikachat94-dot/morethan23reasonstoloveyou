@@ -83,8 +83,8 @@ export function RotatingDiskGallery() {
         // currentScroll goes from 0 (top of section) to totalScrollable (bottom)
         const currentScroll = Math.max(0, -rect.top);
         // Map scroll position linearly to rotation:
-        // full scroll range = 9 steps × DEGREES_PER_STEP = 1080°
-        const totalDegrees = DEFAULT_MEDIA.length * DEGREES_PER_STEP; // 1080°
+        // full scroll range = 6 steps × DEGREES_PER_STEP = 720°
+        const totalDegrees = (DEFAULT_MEDIA.length - 3) * DEGREES_PER_STEP; // 720°
         const angle = (currentScroll / totalScrollable) * totalDegrees;
         setRotationAngle(angle);
       });
@@ -107,11 +107,11 @@ export function RotatingDiskGallery() {
 
   // Current media step: derived from rotation angle, clamped to valid range
   const MEDIA_COUNT = DEFAULT_MEDIA.length; // 9
-  const totalSteps = MEDIA_COUNT; // 9 steps: abc→bcd→...→iab (full wrap)
+  const totalSteps = MEDIA_COUNT - 3; // 6
   const rawStep = rotationAngle / DEGREES_PER_STEP;
-  const currentStep = Math.min(totalSteps - 1, Math.max(0, Math.floor(rawStep)));
+  const currentStep = Math.min(totalSteps, Math.max(0, Math.floor(rawStep)));
 
-  const slotIndex0 = currentStep % MEDIA_COUNT;
+  const slotIndex0 = currentStep;
   const slotIndex1 = (currentStep + 1) % MEDIA_COUNT;
   const slotIndex2 = (currentStep + 2) % MEDIA_COUNT;
 
