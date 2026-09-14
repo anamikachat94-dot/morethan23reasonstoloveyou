@@ -48,6 +48,11 @@ export function RotatingDiskGallery() {
   const [rotationAngle, setRotationAngle] = useState(0);
   const rafRef = useRef<number | null>(null);
 
+  // One ref per media item — keyed by url — so each video/img is created once and never remounted
+  const mediaEls = useRef<Record<string, HTMLVideoElement | HTMLImageElement | null>>({});
+  // One ref per card frame (0, 1, 2) — the DOM node we inject the active media into
+  const frameRefs = useRef<Record<number, HTMLDivElement | null>>({});
+
   const refresh = async () => {
     try {
       const [media, state] = await Promise.all([load(), gate()]);
@@ -114,6 +119,23 @@ export function RotatingDiskGallery() {
     { baseAngle: 240, media: getMedia(slotIndex2), slotNum: slotIndex2 + 1 },
   ];
 
+  // Imperatively move each media element into its target card frame — zero remounts
+  useEffect(() => {
+    cardSlots.forEach((card, idx) => {
+      const frame = frameRefs.current[idx];
+      const el = mediaEls.current[card.media.url];
+      if (!frame || !el) return;
+      // Only move if not already in the right frame
+      if (el.parentNode !== frame) {
+        frame.appendChild(el);
+      }
+      // Ensure video is playing
+      if (el instanceof HTMLVideoElement && el.paused) {
+        void el.play().catch(() => {/* autoplay policy — silent */});
+      }
+    });
+  });
+
   const submitCode = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await unlock({ data: { code } });
@@ -146,6 +168,34 @@ export function RotatingDiskGallery() {
 
   return (
     <div ref={containerRef} className="relative h-[320vh] w-full">
+      {/* Off-screen stable pool — every media element lives here permanently, never remounted */}
+      <div aria-hidden style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", pointerEvents: "none" }}>
+        {allMediaList.map((m) =>
+          m.kind === "video" ? (
+            <video
+              key={m.url}
+              ref={(el) => { mediaEls.current[m.url] = el; }}
+              src={m.url}
+              poster={m.url === "/h vid.mov" ? "/h vid-poster.jpg" : undefined}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="h-full w-full object-contain"
+            />
+          ) : (
+            <img
+              key={m.url}
+              ref={(el) => { mediaEls.current[m.url] = el; }}
+              src={m.url}
+              alt={m.caption || `Memory`}
+              className="h-full w-full object-contain"
+            />
+          )
+        )}
+      </div>
+
       {/* Sticky Viewport */}
       <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden px-4 sm:px-8">
         <div className="relative flex w-full max-w-6xl flex-col items-center justify-between gap-8 md:flex-row md:gap-12">
@@ -206,42 +256,14 @@ export function RotatingDiskGallery() {
                     className="absolute z-20"
                   >
                     <figure
-                      key={card.media.id}
                       className="group relative w-[115px] sm:w-[165px] lg:w-[185px] rounded-[3px] bg-[#FAF8F5] p-1.5 sm:p-2.5 shadow-[0_10px_25px_rgba(0,0,0,0.5)] transition-transform hover:scale-105"
                     >
-                      {/* Media frame — object-contain keeps original proportions, no crop */}
-                      <div className="relative w-full overflow-hidden bg-neutral-900 rounded-[2px]" style={{ height: "145px" }}>
-                        {allMediaList.map((m) =>
-                          m.kind === "video" ? (
-                            <video
-                              key={m.url}
-                              src={m.url}
-                              poster={m.url === "/h vid.mov" ? "/h vid-poster.jpg" : undefined}
-                              autoPlay
-                              muted
-                              loop
-                              playsInline
-                              preload="auto"
-                              className="absolute inset-0 h-full w-full object-contain"
-                              style={{
-                                opacity: m.url === card.media.url ? 1 : 0,
-                                pointerEvents: m.url === card.media.url ? "auto" : "none",
-                              }}
-                            />
-                          ) : (
-                            <img
-                              key={m.url}
-                              src={m.url}
-                              alt={m.caption || `Memory`}
-                              className="absolute inset-0 h-full w-full object-contain"
-                              style={{
-                                opacity: m.url === card.media.url ? 1 : 0,
-                                pointerEvents: m.url === card.media.url ? "auto" : "none",
-                              }}
-                            />
-                          )
-                        )}
-                      </div>
+                      {/* Media frame — active media element is moved here imperatively */}
+                      <div
+                        ref={(el) => { frameRefs.current[idx] = el; }}
+                        className="relative w-full overflow-hidden bg-neutral-900 rounded-[2px]"
+                        style={{ height: "145px" }}
+                      />
 
                       <figcaption
                         className="mt-2 text-center font-display italic text-[0.8rem] sm:text-[0.85rem] leading-snug truncate"
