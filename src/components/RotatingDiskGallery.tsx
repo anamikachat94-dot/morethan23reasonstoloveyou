@@ -46,6 +46,7 @@ export function RotatingDiskGallery() {
   // Positive = clockwise (scroll down), negative = anticlockwise (scroll up)
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [rotationAngle, setRotationAngle] = useState(0);
+  const rafRef = useRef<number | null>(null);
 
   const refresh = async () => {
     try {
@@ -63,24 +64,31 @@ export function RotatingDiskGallery() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const totalScrollable = rect.height - windowHeight;
-      if (totalScrollable <= 0) return;
+      if (rafRef.current !== null) return; // already scheduled
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const totalScrollable = rect.height - windowHeight;
+        if (totalScrollable <= 0) return;
 
-      // currentScroll goes from 0 (top of section) to totalScrollable (bottom)
-      const currentScroll = Math.max(0, -rect.top);
-      // Map scroll position linearly to rotation:
-      // full scroll range = 6 steps × DEGREES_PER_STEP = 720°
-      const totalDegrees = (DEFAULT_MEDIA.length - 3) * DEGREES_PER_STEP; // 720°
-      const angle = (currentScroll / totalScrollable) * totalDegrees;
-      setRotationAngle(angle);
+        // currentScroll goes from 0 (top of section) to totalScrollable (bottom)
+        const currentScroll = Math.max(0, -rect.top);
+        // Map scroll position linearly to rotation:
+        // full scroll range = 6 steps × DEGREES_PER_STEP = 720°
+        const totalDegrees = (DEFAULT_MEDIA.length - 3) * DEGREES_PER_STEP; // 720°
+        const angle = (currentScroll / totalScrollable) * totalDegrees;
+        setRotationAngle(angle);
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   // Map 9 slots: user-uploaded items override defaults
@@ -215,7 +223,10 @@ export function RotatingDiskGallery() {
                               playsInline
                               preload="auto"
                               className="absolute inset-0 h-full w-full object-contain"
-                              style={{ display: m.url === card.media.url ? "block" : "none" }}
+                              style={{
+                                opacity: m.url === card.media.url ? 1 : 0,
+                                pointerEvents: m.url === card.media.url ? "auto" : "none",
+                              }}
                             />
                           ) : (
                             <img
@@ -223,7 +234,10 @@ export function RotatingDiskGallery() {
                               src={m.url}
                               alt={m.caption || `Memory`}
                               className="absolute inset-0 h-full w-full object-contain"
-                              style={{ display: m.url === card.media.url ? "block" : "none" }}
+                              style={{
+                                opacity: m.url === card.media.url ? 1 : 0,
+                                pointerEvents: m.url === card.media.url ? "auto" : "none",
+                              }}
                             />
                           )
                         )}
